@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Controller, Get } from '@nestjs/common';
 
-import { PlayersService } from '../service/players.service';
+import { PlayersService } from './players.service';
 
 @Controller('matches')
 export class PlayersController {
