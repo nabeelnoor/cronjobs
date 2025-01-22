@@ -1,13 +1,13 @@
 import { ConfigService } from '@nestjs/config';
 import { Controller, Get } from '@nestjs/common';
 
-import { ProjectService } from '../service/project.service';
+import { PlayersService } from '../service/players.service';
 
 @Controller('matches')
-export class ProjectController {
+export class PlayersController {
   constructor(
     private configService: ConfigService,
-    private projectService: ProjectService,
+    private projectService: PlayersService,
   ) {}
 
   @Get('/')

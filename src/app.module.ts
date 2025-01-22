@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import configuration from 'config/configuration';
-import { ProjectModule } from 'src/modules/project/project.module';
+import { PlayersModule } from 'src/modules/players/players.module';
 
 @Module({
   imports: [
-    ProjectModule,
+    PlayersModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
   ],
   controllers: [],
