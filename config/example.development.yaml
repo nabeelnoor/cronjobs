@@ -1,0 +1,9 @@
+ENV: ''
+PORT: ''
+
+redis:
+  endpoint: ''
+  port: 1
+  exp_in_hours: 1
+  password: ''
+  username: ''
