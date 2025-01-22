@@ -1,10 +1,15 @@
-import { Logger } from 'src/lib';
+import { Logger } from '@nestjs/common';
 
 export class ProjectService {
-  constructor(private logger: Logger) {}
+  constructor() {}
+  private readonly logger = new Logger(ProjectService.name);
 
   async findMatches() {
-    this.logger.log('testing');
-    return { matches: [] };
+    try {
+      this.logger.log('testing');
+      return { matches: [] };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
