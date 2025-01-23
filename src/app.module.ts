@@ -6,6 +6,7 @@ import KeyvRedis from '@keyv/redis';
 import * as config from 'config';
 import { MatchModule } from './modules/match/match.module';
 import { OutsourceModule } from './modules/outsource/outsource.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 const redisUserName = config.get<string>('redis.username');
 const redisPassword = config.get<string>('redis.password');
@@ -15,6 +16,7 @@ const redisConnectionString = `redis://${redisUserName}:${redisPassword}@${redis
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     PlayerModule,
     MatchModule,
     OutsourceModule,
