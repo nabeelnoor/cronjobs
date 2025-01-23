@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PlayersModule } from 'src/modules/players/players.module';
+import { PlayerModule } from 'src/modules/player/player.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis from '@keyv/redis';
 import * as config from 'config';
+import { MatchModule } from './modules/match/match.module';
 
 const redisUserName = config.get<string>('redis.username');
 const redisPassword = config.get<string>('redis.password');
@@ -13,7 +14,8 @@ const redisConnectionString = `redis://${redisUserName}:${redisPassword}@${redis
 
 @Module({
   imports: [
-    PlayersModule,
+    PlayerModule,
+    MatchModule,
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync({
       useFactory: async () => {

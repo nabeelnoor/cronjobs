@@ -2,9 +2,9 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
-export class PlayersService {
+export class PlayerService {
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
-  private readonly logger = new Logger(PlayersService.name);
+  private readonly logger = new Logger(PlayerService.name);
 
   async findMatches() {
     try {
