@@ -5,6 +5,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis from '@keyv/redis';
 import * as config from 'config';
 import { MatchModule } from './modules/match/match.module';
+import { OutsourceModule } from './modules/outsource/outsource.module';
 
 const redisUserName = config.get<string>('redis.username');
 const redisPassword = config.get<string>('redis.password');
@@ -16,6 +17,7 @@ const redisConnectionString = `redis://${redisUserName}:${redisPassword}@${redis
   imports: [
     PlayerModule,
     MatchModule,
+    OutsourceModule,
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync({
       useFactory: async () => {
