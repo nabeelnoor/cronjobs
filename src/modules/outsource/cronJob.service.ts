@@ -37,21 +37,13 @@ export class CronJobService {
     const existingCronJobs: Array<string> = [];
 
     const cronJobs = this.schedulerRegistry.getCronJobs();
-
-    cronJobs.forEach((value, key) => {
-      let next;
-      this.logger.log('cronLoop', key);
+    for (const cron of cronJobs) {
+      const [key] = cron;
+      this.logger.log('iterating crons', key);
       if (key.includes(cronKeySearchStr)) {
         existingCronJobs.push(key);
       }
-      try {
-        next = value.nextDate().toJSDate();
-      } catch (e) {
-        next = 'error: next fire date is in the past!';
-      }
-      this.logger.log(`job: ${key} -> next: ${next}`);
-    });
-
+    }
     return existingCronJobs;
   }
 
