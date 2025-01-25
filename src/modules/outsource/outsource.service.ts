@@ -29,12 +29,12 @@ export class OutsourceService {
    */
   @Cron(CronExpression.EVERY_10_SECONDS, { name: 'liveMatchCronJob' })
   async getLiveMatches() {
-    this.logger.debug('Live match api called every 30 seconds');
     const matchList = [
       { id: '1', name: 'match1' },
       { id: '2', name: 'match2' },
     ];
 
+    this.logger.log('update Live match cache => every 30 seconds');
     await this.cacheManager.set('matchList', JSON.stringify(matchList), 0);
     await this.matchDetailsCronJobController();
     return matchList;
@@ -48,20 +48,16 @@ export class OutsourceService {
       id: string;
       name: string;
     }> = JSON.parse(matchList);
-    this.logger.log('live matches in cache', liveMatches);
 
     const liveMatchCronJobs = this.cronJobService.getExistingCronJobs(
       `${CRON_JOB_PREFIX.LIVE_MATCH}_`,
     );
 
-    this.logger.log('liveMatchCronJobs', liveMatchCronJobs);
     const { cronJobsToSchedule, cronJobsToKilled } =
       await this.cronJobService.cronJobSync(
         liveMatchCronJobs,
         liveMatches?.map((x) => x.id),
       );
-    this.logger.log('cronJobsToSchedule', cronJobsToSchedule);
-    this.logger.log('cronJobsToKilled', cronJobsToKilled);
 
     for (const schedulerName of cronJobsToSchedule) {
       this.cronJobService.addCronJob(schedulerName, '10');
