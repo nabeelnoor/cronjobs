@@ -18,9 +18,14 @@ export class CronJobService {
     this.logger.warn(`job ${name} deleted!`);
   }
 
-  addCronJob(name: string, seconds: string, cronJobTask?: () => void) {
-    const job = new CronJob(`${seconds} * * * * *`, () => {
-      this.logger.log(cronJobTask);
+  addCronJob(name: string, seconds = '15', cronJobTask?: () => void) {
+    const job = new CronJob(`*/${seconds} * * * * *`, () => {
+      if (cronJobTask) {
+        cronJobTask();
+        this.logger.log(`callback from the cronjob =>${name}`);
+      } else {
+        this.logger.log(`callback from the cronjob =>${name}`);
+      }
     });
 
     this.schedulerRegistry.addCronJob(name, job);

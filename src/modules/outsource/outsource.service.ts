@@ -34,7 +34,7 @@ export class OutsourceService {
       { id: '2', name: 'match2' },
     ];
 
-    this.logger.log('update Live match cache => every 30 seconds');
+    this.logger.log('update Live match cache => every 1 hr');
     await this.cacheManager.set('matchList', JSON.stringify(matchList), 0);
     await this.matchDetailsCronJobController();
     return matchList;
@@ -60,7 +60,7 @@ export class OutsourceService {
       );
 
     for (const schedulerName of cronJobsToSchedule) {
-      this.cronJobService.addCronJob(schedulerName, '10');
+      this.cronJobService.addCronJob(schedulerName, '15');
     }
 
     for (const schedulerName of cronJobsToKilled) {
