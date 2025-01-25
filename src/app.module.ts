@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PlayerModule } from 'src/modules/player/player.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis from '@keyv/redis';
 import * as config from 'config';
@@ -17,7 +16,6 @@ const redisConnectionString = `redis://${redisUserName}:${redisPassword}@${redis
 @Module({
   imports: [
     ScheduleModule.forRoot(),
-    PlayerModule,
     MatchModule,
     OutsourceModule,
     ConfigModule.forRoot({ isGlobal: true }),
