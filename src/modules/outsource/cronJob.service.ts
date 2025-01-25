@@ -59,6 +59,9 @@ export class CronJobService {
    * compare and sync cronjobs with live matches and return list of schedule and killed cronjobs
    */
   async cronJobSync(existingCronJobs: string[], liveMatchesIds: string[]) {
+    this.logger.log('tracking existing cronJob', existingCronJobs);
+    this.logger.log('tracking live matches', liveMatchesIds);
+
     const cronJobsToSchedule: string[] = [];
     for (const matchId of liveMatchesIds) {
       if (
@@ -70,11 +73,16 @@ export class CronJobService {
 
     const cronJobsToKilled: string[] = [];
     for (const existingCron of existingCronJobs) {
-      if (!liveMatchesIds.includes(existingCron.split('_')[1])) {
+      const matchIdFromCronJob = existingCron.split(
+        `${CRON_JOB_PREFIX.LIVE_MATCH}_`,
+      )[1];
+      if (!liveMatchesIds.includes(matchIdFromCronJob)) {
         cronJobsToKilled.push(existingCron);
       }
     }
 
+    this.logger.log('cronToSchedule', cronJobsToSchedule);
+    this.logger.log('cronJobsToKilled', cronJobsToKilled);
     return { cronJobsToSchedule, cronJobsToKilled };
   }
 }

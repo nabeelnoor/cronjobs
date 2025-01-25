@@ -27,7 +27,7 @@ export class OutsourceService {
   /**
    * fetch and prepare list of live matches every 1 hr
    */
-  @Cron(CronExpression.EVERY_30_SECONDS, { name: 'liveMatchCronJob' })
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'liveMatchCronJob' })
   async getLiveMatches() {
     this.logger.debug('Live match api called every 30 seconds');
     const matchList = [
