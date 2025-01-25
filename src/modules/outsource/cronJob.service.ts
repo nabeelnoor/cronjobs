@@ -9,7 +9,6 @@ export class CronJobService {
   private readonly logger = new Logger(CronJobService.name);
 
   async healthCheck() {
-    this.logger.log('checking health for cronjob service');
     this.schedulerRegistry.getCronJobs();
     return { status: 'ok' };
   }
@@ -21,16 +20,13 @@ export class CronJobService {
 
   addCronJob(name: string, seconds: string, cronJobTask?: () => void) {
     const job = new CronJob(`${seconds} * * * * *`, () => {
-      this.logger.log('testing task, debugging', cronJobTask);
-      this.logger.warn(`time (${seconds}) for job ${name} to run!`);
+      this.logger.log(cronJobTask);
     });
 
     this.schedulerRegistry.addCronJob(name, job);
     job.start();
 
-    this.logger.warn(
-      `job ${name} added for each minute at ${seconds} seconds!`,
-    );
+    this.logger.warn(`cronjob ${name} added for interval ${seconds} seconds`);
   }
 
   getExistingCronJobs(cronKeySearchStr: string): Array<string> {
